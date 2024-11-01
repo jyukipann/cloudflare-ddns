@@ -1,1 +1,1 @@
-*/1 * * * * root python /app/ddns_updater.py >> /var/log/cron.log 2>&1
+*/1 * * * * /home/juki/projects/cloudflare-ddns/ddns_updater.py

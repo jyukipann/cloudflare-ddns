@@ -147,7 +147,11 @@ def main():
         pass
 
 if __name__ == "__main__":
+    # subprocess.run([
+    #     'discord_notifier.py',
+    #     'Cloudflare DDNS',
+    #     f"cron executed"
+    # ])
     main()
     # print(get_zone_id(DNS_NAME))
     # print(get_dns_record_id(DNS_NAME))
-
