@@ -1,0 +1,11 @@
+services:
+  cron:
+    build: .
+    restart: unless-stopped
+    command: cron && tail -f /var/log/cron.log
+    # command: bash
+    tty: true
+    volumes:
+      - .:/app
+    env_file:
+      - .env
