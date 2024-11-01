@@ -32,7 +32,26 @@ def get_public_ip():
     except requests.RequestException as e:
         print("Failed to get public IP:", e)
         return None
+
+def get_zone_id(dns_name:str):
+    """CloudflareゾーンID取得"""
+    url = f"{CLOUDFLARE_API_URL}?name={dns_name}"
+    headers = {
+        'X-Auth-Email': E_MAIL,
+        'X-Auth-Key': GLOBAL_API_KEY,
+        'Content-Type': 'application/json',
+    }
     
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        print(response.json())
+        return response.json()["result"][0]["id"]
+    except requests.RequestException as e:
+        print("Failed to get zone ID:", e)
+        print(response.json())
+        return None
+
 def get_dns_record_id(dns_name:str):
     """Cloudflare DNSレコードID取得"""
     url = f"{CLOUDFLARE_API_URL}/{ZONE_ID}/dns_records"
@@ -45,7 +64,7 @@ def get_dns_record_id(dns_name:str):
     try:
         response = requests.get(url, headers=headers)
         response.raise_for_status()
-        return response.json()["result"][0]["id"]
+        return [record["id"] for record in response.json()["result"]]
     except requests.RequestException as e:
         print("Failed to get DNS record ID:", e)
         return None
@@ -129,5 +148,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+    # print(get_zone_id(DNS_NAME))
     # print(get_dns_record_id(DNS_NAME))
 
