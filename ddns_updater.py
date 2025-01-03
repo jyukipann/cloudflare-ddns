@@ -137,11 +137,15 @@ def main():
         result = update_dns_record(ip)
         result = [str(r) for r in result]
         result = '\n'.join(result)
-        subprocess.run([
-            'discord_notifier.py', 
-            'Cloudflare DDNS', 
-            f"detected mismatch between public IP and DNS record\n{ip} != {current_recorded_ip}\n{result}"
-        ])
+        try: 
+            subprocess.run([
+                'discord_notifier.py', 
+                'Cloudflare DDNS', 
+                f"detected mismatch between public IP and DNS record\n{ip} != {current_recorded_ip}\n{result}"
+            ])
+        except Exception as e:
+            print("Failed to send notification:", e)
+            print(f"detected mismatch between public IP and DNS record\n{ip} != {current_recorded_ip}\n{result}")
     else:
         # print("No update required")
         pass
