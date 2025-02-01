@@ -100,17 +100,6 @@ def update_dns_record(ip):
         # print("Failed to update DNS record:", e)
         results.append(e)
     
-    data['name'] = '*.'+DNS_NAME
-    url = f"{CLOUDFLARE_API_URL}/{ZONE_ID}/dns_records/{RECORD_ID_W}"
-    try:
-        response = requests.put(url, json=data, headers=headers)
-        # response.raise_for_status()
-        # print(f"DNS record updated successfully {data['name']}:", response.json())
-        results.append(response.json())
-    except requests.RequestException as e:
-        # print("Failed to update DNS record:", e)
-        results.append(e)
-    
     return results
 
 def get_dns_record(dns_name:str):
@@ -139,7 +128,8 @@ def main():
         result = '\n'.join(result)
         try: 
             subprocess.run([
-                'discord_notifier.py', 
+                'python3',
+                '/home/juki/workspace/scripts/discord_notifier.py',
                 'Cloudflare DDNS', 
                 f"detected mismatch between public IP and DNS record\n{ip} != {current_recorded_ip}\n{result}"
             ])
