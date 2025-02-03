@@ -17,6 +17,6 @@ crontab -e
 ```
 でcronを設定する
 ```bash
-*/5 * * * * python /Users/juki/Workspace/cloudflare-ddns/ddns_updater.py
+*/5 * * * * python3 /home/juki/workspace/cloudflare-ddns/ddns_updater.py
 ```
 で5分ごとに実行される
